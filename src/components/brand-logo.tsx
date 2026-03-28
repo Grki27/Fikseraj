@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -18,7 +19,7 @@ export function BrandLogo({
 }: BrandLogoProps) {
   const px = sizes[size];
   const mark = (
-    <img
+    <Image
       src="/brand/fikseraj-logo.svg"
       alt=""
       width={px}

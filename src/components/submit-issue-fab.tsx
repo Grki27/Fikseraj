@@ -17,7 +17,7 @@ const categories: { value: IssueCategory; label: string }[] = [
 
 export function SubmitIssueFab() {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<"form" | "map">("form");
   const [title, setTitle] = useState("");

@@ -7,7 +7,6 @@ import {
   APIProvider,
   Map,
   AdvancedMarker,
-  MapCameraChangedEvent,
   useMap,
 } from "@vis.gl/react-google-maps";
 import { ZAGREB_CENTER } from "@/lib/constants";
@@ -95,7 +94,7 @@ export function IssueMap({ issues }: { issues: MapIssue[] }) {
     null,
   );
 
-  const onCam = useCallback((_e: MapCameraChangedEvent) => {}, []);
+  const onCam = useCallback(() => {}, []);
 
   const onUserPos = useCallback((p: google.maps.LatLngLiteral) => {
     setUserPos(p);

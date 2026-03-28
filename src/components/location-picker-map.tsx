@@ -6,7 +6,6 @@ import {
   Map,
   AdvancedMarker,
 } from "@vis.gl/react-google-maps";
-import { ZAGREB_CENTER } from "@/lib/constants";
 
 type LatLng = google.maps.LatLngLiteral;
 

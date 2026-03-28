@@ -95,8 +95,12 @@ export async function POST(
     if (result.kind === "resolved") {
       return NextResponse.json({ error: "Issue resolved" }, { status: 400 });
     }
-    const { kind: _k, ...body } = result;
-    return NextResponse.json(body);
+    return NextResponse.json({
+      duplicate: result.duplicate,
+      upvoteCount: result.upvoteCount,
+      status: result.status,
+      sentToHoldingEmail: result.sentToHoldingEmail,
+    });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: "Server error" }, { status: 500 });

@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma";
 import { IssueMap } from "@/components/issue-map";
-import { AiOverview } from "@/components/ai-overview";
 import { ShellHeader } from "@/components/shell-header";
 import { IssueStatus } from "@prisma/client";
 
@@ -27,7 +26,6 @@ export default async function HomePage() {
         subtitle="Pregled prijava na karti — riješeno je skriveno s karte."
       />
       <IssueMap issues={issues} />
-      <AiOverview />
     </div>
   );
 }

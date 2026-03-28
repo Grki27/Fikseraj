@@ -1,5 +1,6 @@
 import { auth, signIn } from "@/auth";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 export default async function LoginPage({
   searchParams,
@@ -16,12 +17,13 @@ export default async function LoginPage({
     <div className="flex min-h-dvh flex-col bg-background">
       <div className="relative bg-gradient-to-br from-primary to-[#0052A3] px-6 pb-14 pt-12 text-center text-white">
         <div className="mx-auto flex max-w-md flex-col items-center gap-4">
-          <img
+          <Image
             src="/brand/fikseraj-logo.svg"
             alt=""
             width={88}
             height={88}
             className="drop-shadow-md"
+            priority
           />
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-white">

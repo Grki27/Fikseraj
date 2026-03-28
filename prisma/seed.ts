@@ -1,8 +1,5 @@
-import {
-  PrismaClient,
-  IssueCategory,
-  IssueStatus,
-} from "@prisma/client";
+import { PrismaClient, IssueStatus } from "@prisma/client";
+import { buildDummyIssueData } from "./dummy-issues-hr";
 
 const prisma = new PrismaClient();
 
@@ -21,7 +18,7 @@ async function main() {
       title: "Rupa u kolniku kod tržnice Dolac",
       description:
         "Duboka rupa uz rub kolnika uzrokuje udare. Treba hitno asfaltiranje.",
-      category: IssueCategory.PROMET,
+      category: "PROMET" as const,
       lat: 45.8157,
       lng: 15.9785,
       addressText: "Dolac, 10000 Zagreb",
@@ -30,8 +27,9 @@ async function main() {
     },
     {
       title: "Puklo ulično osvjetljenje u Tkalčićevoj",
-      description: "Stubić lampe je polomljen, žica vidljiva — sigurnosni rizik.",
-      category: IssueCategory.KOMUNALNI,
+      description:
+        "Stubić lampe je polomljen, žica vidljiva — sigurnosni rizik.",
+      category: "KOMUNALNI" as const,
       lat: 45.8175,
       lng: 15.9734,
       addressText: "Tkalčićeva, Zagreb",
@@ -42,7 +40,7 @@ async function main() {
       title: "Naglomila kanta za smeće u parku",
       description:
         "Preglomila kanta u parku na jarunu — otpad se širi okolo.",
-      category: IssueCategory.OKOLIS,
+      category: "OKOLIS" as const,
       lat: 45.7831,
       lng: 15.9002,
       addressText: "Jarun, Zagreb",
@@ -65,6 +63,17 @@ async function main() {
       },
     });
   }
+
+  const removed = await prisma.issue.deleteMany({
+    where: { title: { startsWith: "[DEMO]" } },
+  });
+  if (removed.count > 0) {
+    console.log(`Uklonjeno starih [DEMO] prijava: ${removed.count}`);
+  }
+
+  const dummy = buildDummyIssueData(user.id);
+  const created = await prisma.issue.createMany({ data: dummy });
+  console.log(`Dodano demo prijava: ${created.count}`);
 
   console.log("Seed gotov.");
 }
