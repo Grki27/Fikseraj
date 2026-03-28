@@ -64,10 +64,7 @@ export default async function IssuesPage({
 
   return (
     <div className="space-y-4">
-      <ShellHeader
-        title="Lista prijava"
-        subtitle="Zadano: najpopularnije. Filtri uključuju riješene."
-      />
+      <ShellHeader title="Lista prijava" />
       <IssuesFilterBar
         category={sp.category}
         status={sp.status}

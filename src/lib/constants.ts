@@ -4,7 +4,7 @@ export const ZAGREB_CENTER = { lat: 45.815, lng: 15.9819 };
 export const DESCRIPTION_MAX_LENGTH = 500;
 
 export function getUpvoteEmailThreshold() {
-  return Number(process.env.UPVOTE_EMAIL_THRESHOLD ?? "50");
+  return Number(process.env.UPVOTE_EMAIL_THRESHOLD ?? "100");
 }
 
 export function getResolveVoteThreshold() {

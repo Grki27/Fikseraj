@@ -1,5 +1,5 @@
 import { google } from "googleapis";
-import { appBaseUrl } from "@/lib/constants";
+import { appBaseUrl, getUpvoteEmailThreshold } from "@/lib/constants";
 
 function getOAuth2Client() {
   const id = process.env.GMAIL_OAUTH_CLIENT_ID;
@@ -27,10 +27,11 @@ export async function sendHoldingAlertEmail(params: {
   }
 
   const base = appBaseUrl();
+  const threshold = getUpvoteEmailThreshold();
   const link = `${base}/issues/${params.issueId}`;
   const subject = `[Fikseraj] High Priority Issue: ${params.title}`;
   const body = [
-    `A problem has reached significant public attention (50+ upvotes).`,
+    `A problem has reached significant public attention (${threshold}+ upvotes).`,
     ``,
     `Title:`,
     params.title,

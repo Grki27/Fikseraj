@@ -110,16 +110,16 @@ export function IssueActions({
         className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-semibold text-primary-foreground shadow-sm transition hover:bg-primary-hover disabled:opacity-60 min-[400px]:flex-initial"
       >
         <ThumbsUp className="size-5" />
-        Sviđa mi se
+        Upvote
         {upvotes != null && <span className="opacity-90">({upvotes})</span>}
       </button>
       <button
         type="button"
         disabled={busy || resolveVoted}
         onClick={() => void onResolve()}
-        className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-secondary bg-card px-4 py-3 font-semibold text-secondary disabled:opacity-60 min-[400px]:flex-initial"
+        className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-emerald-600 bg-emerald-50 px-4 py-3 font-semibold text-emerald-800 shadow-sm transition hover:bg-emerald-100 disabled:opacity-60 min-[400px]:flex-initial"
       >
-        <CheckCircle className="size-5" />
+        <CheckCircle className="size-5 text-emerald-700" />
         Riješeno
         {resolves != null && <span>({resolves})</span>}
       </button>

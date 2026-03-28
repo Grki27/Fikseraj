@@ -47,6 +47,17 @@ async function main() {
       upvoteCount: 2,
       resolveCount: 0,
     },
+    {
+      title: "Big pothole on Savska cesta",
+      description:
+        "A large pothole has formed on Savska cesta, creating a hazard for drivers, cyclists, and pedestrians. It should be fixed as soon as possible.",
+      category: "PROMET" as const,
+      lat: 45.802,
+      lng: 15.968,
+      addressText: "Savska cesta, Zagreb",
+      upvoteCount: 99,
+      resolveCount: 0,
+    },
   ];
 
   for (const s of samples) {
@@ -74,6 +85,30 @@ async function main() {
   const dummy = buildDummyIssueData(user.id);
   const created = await prisma.issue.createMany({ data: dummy });
   console.log(`Dodano demo prijava: ${created.count}`);
+
+  const pothole = await prisma.issue.updateMany({
+    where: {
+      title: {
+        in: ["Big pothole on Savska cesta", "Big pothole in savska ulica"],
+      },
+    },
+    data: { upvoteCount: 99 },
+  });
+  if (pothole.count > 0) {
+    console.log(
+      `Ažurirano upvoteCount=99 za Savska pothole prijave (${pothole.count})`,
+    );
+  }
+
+  const trafficLight = await prisma.issue.updateMany({
+    where: { title: "Traffic light not working" },
+    data: { upvoteCount: 99 },
+  });
+  if (trafficLight.count > 0) {
+    console.log(
+      `Ažurirano upvoteCount=99 za: Traffic light not working (${trafficLight.count})`,
+    );
+  }
 
   console.log("Seed gotov.");
 }
