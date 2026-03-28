@@ -92,7 +92,7 @@ export function IssueActions({
 
   if (localStatus === "RESOLVED") {
     return (
-      <div className="rounded-xl border border-border bg-muted/50 p-4 text-center text-muted-foreground">
+      <div className="rounded-2xl border border-border bg-muted/50 p-4 text-center text-muted-foreground">
         Ova prijava je označena kao riješena (uklonjeno s karte).
         {upvotes != null && (
           <p className="mt-2 text-sm text-foreground">Glasovi: {upvotes}</p>
@@ -107,7 +107,7 @@ export function IssueActions({
         type="button"
         disabled={busy || upvoted}
         onClick={() => void onUpvote()}
-        className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60 min-[400px]:flex-initial"
+        className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-semibold text-primary-foreground shadow-sm transition hover:bg-primary-hover disabled:opacity-60 min-[400px]:flex-initial"
       >
         <ThumbsUp className="size-5" />
         Sviđa mi se

@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { ProfileForm } from "@/components/profile-form";
+import { ShellHeader } from "@/components/shell-header";
 import Image from "next/image";
 import Link from "next/link";
 import { statusLabel, categoryLabel } from "@/lib/labels";
@@ -38,8 +39,8 @@ export default async function ProfilePage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Moj profil</h1>
-      <div className="flex items-center gap-4 rounded-xl border border-border bg-card p-4">
+      <ShellHeader title="Moj profil" subtitle="Uredi profil i pregledaj svoje prijave." />
+      <div className="flex items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-sm">
         {user.image && (
           <Image
             src={user.image}

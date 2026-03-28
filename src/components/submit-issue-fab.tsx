@@ -194,7 +194,7 @@ export function SubmitIssueFab() {
       <button
         type="button"
         onClick={openFab}
-        className="fixed bottom-24 right-5 z-30 flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg ring-4 ring-background transition hover:bg-primary-hover"
+        className="fixed bottom-24 right-5 z-30 flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[0_4px_14px_rgba(0,102,204,0.4)] ring-4 ring-background transition hover:bg-primary-hover hover:shadow-[0_6px_18px_rgba(0,102,204,0.45)]"
         aria-label="Nova prijava"
       >
         <Plus className="size-8" strokeWidth={2.5} />
@@ -202,9 +202,9 @@ export function SubmitIssueFab() {
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-4">
-          <div className="max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-2xl bg-card p-4 shadow-xl sm:rounded-2xl">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-lg font-bold">Nova prijava</h2>
+          <div className="max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-2xl border border-border bg-card p-4 shadow-xl sm:rounded-2xl">
+            <div className="mb-4 flex items-center justify-between border-b border-border/60 pb-3">
+              <h2 className="text-lg font-bold text-foreground">Nova prijava</h2>
               <button
                 type="button"
                 className="rounded-lg p-2 text-muted-foreground hover:bg-muted"

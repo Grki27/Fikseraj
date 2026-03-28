@@ -44,3 +44,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# lokalni SQLite (brzi dev bez Postgresa)
+prisma/dev.db
+prisma/dev.db-journal
+
+# korisnički uploadi (lokalno)
+/public/uploads/

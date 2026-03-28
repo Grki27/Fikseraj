@@ -26,7 +26,7 @@ export function IssuesFilterBar({
   };
 
   return (
-    <div className="flex flex-col gap-2 rounded-xl border border-border bg-card p-3 text-sm">
+    <div className="flex flex-col gap-2 rounded-2xl border border-border bg-card p-3 text-sm shadow-sm">
       <div className="flex flex-wrap gap-2">
         <label className="text-muted-foreground">Kategorija:</label>
         <select

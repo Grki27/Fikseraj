@@ -27,8 +27,7 @@ export function ProfileForm({
         body: JSON.stringify({ username, bio }),
       });
       if (!r.ok) throw new Error();
-      setMsg("Spremljeno.");
-      router.refresh();
+      router.push("/");
     } catch {
       setMsg("Greška pri spremanju.");
     } finally {
@@ -39,28 +38,28 @@ export function ProfileForm({
   return (
     <form
       onSubmit={(e) => void save(e)}
-      className="space-y-3 rounded-xl border border-border bg-card p-4"
+      className="space-y-3 rounded-2xl border border-border bg-card p-4 shadow-sm"
     >
-      <h2 className="font-semibold">Uredi profil</h2>
+      <h2 className="font-semibold text-foreground">Uredi profil</h2>
       <label className="block text-sm font-medium">Korisničko ime</label>
       <input
-        className="w-full rounded-lg border border-border bg-input-background px-3 py-2"
+        className="w-full rounded-xl border border-border bg-input-background px-3 py-2 transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         placeholder="npr. zagreb_user"
       />
       <label className="block text-sm font-medium">Bio</label>
       <textarea
-        className="min-h-20 w-full rounded-lg border border-border bg-input-background px-3 py-2"
+        className="min-h-20 w-full rounded-xl border border-border bg-input-background px-3 py-2 transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
         value={bio}
         onChange={(e) => setBio(e.target.value)}
         placeholder="Kratki opis…"
       />
-      {msg && <p className="text-sm text-primary">{msg}</p>}
+      {msg && <p className="text-sm text-destructive">{msg}</p>}
       <button
         type="submit"
         disabled={busy}
-        className="rounded-xl bg-primary px-4 py-2 font-medium text-primary-foreground disabled:opacity-50"
+        className="rounded-xl bg-primary px-4 py-2.5 font-semibold text-primary-foreground shadow-sm transition hover:bg-primary-hover disabled:opacity-50"
       >
         Spremi
       </button>

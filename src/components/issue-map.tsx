@@ -105,7 +105,7 @@ export function IssueMap({ issues }: { issues: MapIssue[] }) {
 
   if (!apiKey) {
     return (
-      <div className="flex h-[60vh] items-center justify-center rounded-xl bg-muted p-6 text-center text-muted-foreground">
+      <div className="flex h-[60vh] items-center justify-center rounded-2xl border border-dashed border-border bg-muted/60 p-6 text-center text-muted-foreground">
         Postavite{" "}
         <code className="mx-1 rounded bg-card px-1">
           NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
@@ -116,7 +116,7 @@ export function IssueMap({ issues }: { issues: MapIssue[] }) {
   }
 
   return (
-    <div className="relative h-[min(70vh,560px)] w-full overflow-hidden rounded-xl ring-1 ring-border">
+    <div className="relative h-[min(70vh,560px)] w-full overflow-hidden rounded-2xl ring-1 ring-border ring-primary/10 shadow-sm">
       <APIProvider apiKey={apiKey}>
         <Map
           defaultCenter={center}

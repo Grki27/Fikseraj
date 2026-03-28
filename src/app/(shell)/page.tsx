@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { IssueMap } from "@/components/issue-map";
 import { AiOverview } from "@/components/ai-overview";
+import { ShellHeader } from "@/components/shell-header";
 import { IssueStatus } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
@@ -21,14 +22,10 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-6">
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">
-          Fikseraj
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          Pregled prijava na karti — riješeno je skriveno s karte.
-        </p>
-      </header>
+      <ShellHeader
+        title="Karta"
+        subtitle="Pregled prijava na karti — riješeno je skriveno s karte."
+      />
       <IssueMap issues={issues} />
       <AiOverview />
     </div>

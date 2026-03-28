@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { categoryLabel, statusLabel } from "@/lib/labels";
 import { IssueActions } from "@/components/issue-actions";
 import { MiniMap } from "@/components/mini-map";
+import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 import { IssueStatus } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
@@ -26,20 +28,31 @@ export default async function IssueDetailPage({
 
   return (
     <article className="space-y-4 pb-8">
+      <div className="flex items-center justify-between gap-3 border-b border-border/80 pb-4">
+        <Link
+          href="/issues"
+          className="text-sm font-semibold text-primary hover:text-primary-hover"
+        >
+          ← Lista prijava
+        </Link>
+        <BrandLogo size="sm" />
+      </div>
       <div className="space-y-1">
-        <p className="text-xs font-medium uppercase tracking-wide text-primary">
+        <p className="text-xs font-semibold uppercase tracking-wide text-secondary">
           {issue.category === "OSTALO" && issue.customCategory
             ? issue.customCategory
             : categoryLabel[issue.category]}
         </p>
-        <h1 className="text-2xl font-bold text-foreground">{issue.title}</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">
+          {issue.title}
+        </h1>
         <p className="text-sm text-muted-foreground">
           {statusLabel[issue.status]} ·{" "}
           {new Date(issue.createdAt).toLocaleString("hr-HR")}
         </p>
       </div>
       {issue.imageUrl && (
-        <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-muted">
+        <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-muted ring-1 ring-border">
           <Image
             src={issue.imageUrl}
             alt=""
@@ -55,7 +68,7 @@ export default async function IssueDetailPage({
         <p className="text-sm text-muted-foreground">📍 {issue.addressText}</p>
       )}
       {onMap && (
-        <div className="h-40 overflow-hidden rounded-xl ring-1 ring-border">
+        <div className="h-40 overflow-hidden rounded-2xl ring-1 ring-border ring-primary/15">
           <MiniMap lat={issue.lat} lng={issue.lng} />
         </div>
       )}

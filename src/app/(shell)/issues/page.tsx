@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { IssueCategory, IssueStatus, Prisma } from "@prisma/client";
 import { categoryLabel, statusLabel } from "@/lib/labels";
 import { IssuesFilterBar } from "@/components/issues-filter-bar";
+import { ShellHeader } from "@/components/shell-header";
 import { ThumbsUp, MapPin } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -63,12 +64,10 @@ export default async function IssuesPage({
 
   return (
     <div className="space-y-4">
-      <header>
-        <h1 className="text-2xl font-bold">Lista prijava</h1>
-        <p className="text-sm text-muted-foreground">
-          Zadano: najpopularnije. Filtri uključuju riješene.
-        </p>
-      </header>
+      <ShellHeader
+        title="Lista prijava"
+        subtitle="Zadano: najpopularnije. Filtri uključuju riješene."
+      />
       <IssuesFilterBar
         category={sp.category}
         status={sp.status}
@@ -79,7 +78,7 @@ export default async function IssuesPage({
           <li key={issue.id}>
             <Link
               href={`/issues/${issue.id}`}
-              className="flex gap-3 rounded-xl border border-border bg-card p-3 shadow-sm transition hover:ring-2 hover:ring-primary/20"
+              className="flex gap-3 rounded-2xl border border-border bg-card p-3 shadow-sm transition hover:border-primary/30 hover:shadow-md"
             >
               <div className="relative size-24 shrink-0 overflow-hidden rounded-lg bg-muted">
                 {issue.imageUrl ? (

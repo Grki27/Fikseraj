@@ -8,7 +8,9 @@ export default function ShellLayout({
 }) {
   return (
     <>
-      <div className="mx-auto min-h-dvh max-w-3xl px-4 pb-24 pt-4">{children}</div>
+      <div className="mx-auto min-h-dvh max-w-3xl px-4 pb-28 pt-3 sm:px-5">
+        {children}
+      </div>
       <SubmitIssueFab />
       <SiteNav />
     </>
