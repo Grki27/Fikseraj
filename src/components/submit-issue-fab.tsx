@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
-import { useCallback, useState } from "react";
-import { Plus } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
+import { ImagePlus, Plus, X } from "lucide-react";
 import { IssueCategory } from "@prisma/client";
 import { DESCRIPTION_MAX_LENGTH, ZAGREB_CENTER } from "@/lib/constants";
 import { LocationPickerMap } from "@/components/location-picker-map";
@@ -31,6 +31,12 @@ export function SubmitIssueFab() {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const clearPhoto = () => {
+    setImageUrl(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
 
   const reset = () => {
     setStep("form");
@@ -44,6 +50,7 @@ export function SubmitIssueFab() {
     setAddressText(null);
     setImageUrl(null);
     setErr(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const openFab = () => {
@@ -194,7 +201,7 @@ export function SubmitIssueFab() {
       <button
         type="button"
         onClick={openFab}
-        className="fixed bottom-24 right-5 z-30 flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[0_4px_14px_rgba(0,102,204,0.4)] ring-4 ring-background transition hover:bg-primary-hover hover:shadow-[0_6px_18px_rgba(0,102,204,0.45)]"
+        className="fixed bottom-24 right-5 z-30 flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[0_4px_14px_rgba(0,102,204,0.4)] ring-4 ring-background transition-[transform,box-shadow,background-color] duration-200 hover:bg-primary-hover hover:shadow-[0_6px_18px_rgba(0,102,204,0.45)] active:scale-90"
         aria-label="Nova prijava"
       >
         <Plus className="size-8" strokeWidth={2.5} />
@@ -292,12 +299,62 @@ export function SubmitIssueFab() {
                     />
                   </>
                 )}
-                <label className="block text-sm font-medium">
+                <label
+                  htmlFor="issue-photo-input"
+                  className="block text-sm font-medium"
+                >
                   Fotografija (opcionalno)
                 </label>
-                <input type="file" accept="image/*" capture="environment" onChange={onFile} />
-                {imageUrl && (
-                  <p className="text-xs text-success">✓ Učitano</p>
+                <input
+                  ref={fileInputRef}
+                  id="issue-photo-input"
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  className="sr-only"
+                  onChange={onFile}
+                  aria-label="Odaberi fotografiju prijave"
+                />
+                {!imageUrl ? (
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={() => fileInputRef.current?.click()}
+                    className="group flex w-full flex-col items-center gap-2 rounded-xl border-2 border-dashed border-border bg-input-background px-4 py-8 text-center transition-colors hover:border-primary/45 hover:bg-accent/40 disabled:pointer-events-none disabled:opacity-50"
+                  >
+                    <span className="flex size-14 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
+                      <ImagePlus className="size-7" strokeWidth={2} />
+                    </span>
+                    <span className="text-sm font-semibold text-foreground">
+                      Dodaj fotografiju
+                    </span>
+                    <span className="max-w-[240px] text-xs leading-snug text-muted-foreground">
+                      Dodirni za kameru ili galeriju · JPG, PNG, WebP · do 4 MB
+                    </span>
+                  </button>
+                ) : (
+                  <div className="flex items-stretch gap-3 overflow-hidden rounded-xl border border-border bg-input-background p-3">
+                    {/* eslint-disable-next-line @next/next/no-img-element -- user upload preview */}
+                    <img
+                      src={imageUrl}
+                      alt=""
+                      className="size-[72px] shrink-0 rounded-lg object-cover ring-1 ring-border"
+                    />
+                    <div className="flex min-w-0 flex-1 flex-col justify-center gap-2">
+                      <p className="text-sm font-semibold text-emerald-600">
+                        Fotografija je učitana
+                      </p>
+                      <button
+                        type="button"
+                        disabled={busy}
+                        onClick={clearPhoto}
+                        className="inline-flex w-fit items-center gap-1 rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-destructive/40 hover:text-destructive disabled:opacity-50"
+                      >
+                        <X className="size-3.5" />
+                        Ukloni
+                      </button>
+                    </div>
+                  </div>
                 )}
 
                 <label className="block text-sm font-medium">Lokacija *</label>

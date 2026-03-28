@@ -18,11 +18,11 @@ export default async function LoginPage({
       <div className="relative bg-gradient-to-br from-primary to-[#0052A3] px-6 pb-14 pt-12 text-center text-white">
         <div className="mx-auto flex max-w-md flex-col items-center gap-4">
           <Image
-            src="/brand/fikseraj-logo.svg"
-            alt=""
+            src="/brand/fikseraj-logo.png"
+            alt="Fikseraj"
             width={88}
             height={88}
-            className="drop-shadow-md"
+            className="rounded-full object-cover shadow-lg ring-2 ring-white/30"
             priority
           />
           <div>

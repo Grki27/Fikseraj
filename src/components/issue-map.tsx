@@ -9,6 +9,7 @@ import {
   AdvancedMarker,
   useMap,
 } from "@vis.gl/react-google-maps";
+import { cn } from "@/lib/utils";
 import { ZAGREB_CENTER } from "@/lib/constants";
 import type { IssueCategory, IssueStatus } from "@prisma/client";
 
@@ -74,7 +75,7 @@ function RecenterOnUser({ userPos }: { userPos: google.maps.LatLngLiteral | null
   return (
     <button
       type="button"
-      className="absolute right-3 top-14 z-10 rounded-lg bg-card px-3 py-2 text-sm font-medium text-foreground shadow-md ring-1 ring-border"
+      className="absolute right-3 top-14 z-10 rounded-lg bg-card px-3 py-2 text-sm font-medium text-foreground shadow-md ring-1 ring-border transition-transform duration-200 hover:bg-accent active:scale-95"
       onClick={() => {
         if (!map || !userPos) return;
         map.panTo(userPos);
@@ -86,7 +87,17 @@ function RecenterOnUser({ userPos }: { userPos: google.maps.LatLngLiteral | null
   );
 }
 
-export function IssueMap({ issues }: { issues: MapIssue[] }) {
+export function IssueMap({
+  issues,
+  tall = false,
+  embedded = false,
+}: {
+  issues: MapIssue[];
+  /** Veća karta na početnoj stranici */
+  tall?: boolean;
+  /** Unutar vanjske kartice (početna) — blaži rubovi */
+  embedded?: boolean;
+}) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
   const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAP_ID;
   const [selected, setSelected] = useState<MapIssue | null>(null);
@@ -104,7 +115,13 @@ export function IssueMap({ issues }: { issues: MapIssue[] }) {
 
   if (!apiKey) {
     return (
-      <div className="flex h-[60vh] items-center justify-center rounded-2xl border border-dashed border-border bg-muted/60 p-6 text-center text-muted-foreground">
+      <div
+        className={cn(
+          "home-map-shell flex items-center justify-center border border-dashed border-border bg-muted/60 p-6 text-center text-muted-foreground",
+          embedded ? "rounded-2xl" : "rounded-3xl",
+          tall ? "h-[min(78vh,720px)]" : "h-[60vh]",
+        )}
+      >
         Postavite{" "}
         <code className="mx-1 rounded bg-card px-1">
           NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
@@ -115,13 +132,24 @@ export function IssueMap({ issues }: { issues: MapIssue[] }) {
   }
 
   return (
-    <div className="relative h-[min(70vh,560px)] w-full overflow-hidden rounded-2xl ring-1 ring-border ring-primary/10 shadow-sm">
+    <div
+      className={cn(
+        "home-map-shell relative w-full overflow-hidden transition-[box-shadow,transform] duration-500 ease-out",
+        embedded
+          ? "rounded-2xl ring-1 ring-border/60 shadow-sm hover:shadow-md"
+          : "rounded-3xl ring-1 shadow-lg ring-primary/15 hover:shadow-2xl hover:shadow-primary/10",
+        tall
+          ? "h-[min(82vh,720px)] min-h-[420px]"
+          : "h-[min(70vh,560px)] shadow-md",
+      )}
+    >
       <APIProvider apiKey={apiKey}>
         <Map
           defaultCenter={center}
           defaultZoom={12}
           gestureHandling="greedy"
           disableDefaultUI={false}
+          mapTypeControl={false}
           {...(mapId ? { mapId } : {})}
           onCameraChanged={onCam}
         >
@@ -132,7 +160,7 @@ export function IssueMap({ issues }: { issues: MapIssue[] }) {
               position={{ lat: issue.lat, lng: issue.lng }}
               onClick={() => setSelected(issue)}
             >
-              <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-card text-xl shadow-lg ring-2 ring-primary/30 transition-transform hover:scale-110">
+              <div className="map-marker-btn relative flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-card text-xl shadow-lg ring-2 ring-primary/30 hover:scale-110 hover:shadow-xl">
                 {categoryGlyph[issue.category]}
                 <StatusDot status={issue.status} />
               </div>
@@ -143,10 +171,13 @@ export function IssueMap({ issues }: { issues: MapIssue[] }) {
       </APIProvider>
 
       {selected && (
-        <div className="absolute bottom-3 left-3 right-3 z-20 rounded-xl border border-border bg-card p-3 shadow-xl md:left-auto md:right-3 md:w-80">
+        <div
+          key={selected.id}
+          className="map-popup-enter absolute bottom-3 left-3 right-3 z-20 rounded-xl border border-border bg-card/95 p-3 shadow-xl backdrop-blur-sm md:left-auto md:right-3 md:w-80"
+        >
           <button
             type="button"
-            className="absolute right-2 top-2 rounded-md p-1 text-muted-foreground hover:bg-muted"
+            className="absolute right-2 top-2 rounded-md p-1 text-muted-foreground transition-colors hover:bg-muted active:scale-90"
             onClick={() => setSelected(null)}
             aria-label="Zatvori"
           >
@@ -154,7 +185,7 @@ export function IssueMap({ issues }: { issues: MapIssue[] }) {
           </button>
           <Link
             href={`/issues/${selected.id}`}
-            className="flex gap-3 pt-1"
+            className="flex gap-3 pt-1 transition-[transform,opacity] duration-200 active:scale-[0.98]"
             onClick={() => setSelected(null)}
           >
             <div className="relative size-16 shrink-0 overflow-hidden rounded-lg bg-muted">

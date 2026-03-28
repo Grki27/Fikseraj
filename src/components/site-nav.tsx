@@ -29,7 +29,7 @@ export function SiteNav() {
               key={href}
               href={href}
               className={cn(
-                "flex min-w-0 max-w-[5.5rem] flex-1 flex-col items-center gap-0.5 rounded-xl px-1 py-1.5 text-center text-[10px] font-semibold leading-tight transition-colors sm:min-w-[4.25rem] sm:px-2 sm:text-xs",
+                "flex min-w-0 max-w-[5.5rem] flex-1 flex-col items-center gap-0.5 rounded-xl px-1 py-1.5 text-center text-[10px] font-semibold leading-tight transition-[colors,transform] duration-200 active:scale-95 sm:min-w-[4.25rem] sm:px-2 sm:text-xs",
                 active
                   ? "bg-accent text-primary"
                   : "text-muted-foreground hover:bg-muted/80 hover:text-foreground",
